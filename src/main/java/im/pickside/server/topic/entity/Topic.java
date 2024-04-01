@@ -2,6 +2,7 @@ package im.pickside.server.topic.entity;
 
 import im.pickside.server.annotation.NoBadWords;
 import im.pickside.server.common.entity.SecureBaseEntity;
+import im.pickside.server.topic.dto.request.RequestNewTopic;
 import im.pickside.server.topic.enums.TopicStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,5 +43,14 @@ public class Topic extends SecureBaseEntity {
 
     @Column(columnDefinition = "default NULL")
     private LocalDateTime deletedAt;
+
+    public static Topic of(RequestNewTopic request) {
+        return Topic.builder()
+                .title(request.title())
+                .optionA(request.optionA())
+                .optionB(request.optionB())
+                .status(TopicStatus.PUBLISHED)
+                .build();
+    }
 
 }
